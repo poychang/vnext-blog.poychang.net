@@ -19,3 +19,8 @@ http://localhost:5080/
 ## Useful Documentation
 
 - [Statiq website](https://www.statiq.dev/)
+
+
+## Before go live
+
+- Update the `robots.txt` file to allow search engines to index the site
