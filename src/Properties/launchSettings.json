@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Statiq.SampleSite": {
+      "commandName": "Project",
+      "commandLineArgs": "preview"
+    }
+  }
+}
