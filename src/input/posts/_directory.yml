@@ -1,0 +1,4 @@
+DestinationPath: => {
+        var folder = Document.Destination.FileName.ChangeExtension(string.Empty).ToString()[11..];
+        return $"{folder}/index.html";
+    }
