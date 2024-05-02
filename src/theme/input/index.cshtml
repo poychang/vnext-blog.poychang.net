@@ -1,0 +1,103 @@
+Description: => Context.GetString("SiteDescription")
+ArchiveSources: => GetString("PostSources")
+ArchiveFilter: => GetBool("IsPost")
+ArchiveDestination: >
+  => GetInt("Index") <= 1 ? $"index.html" : $"page/{GetInt("Index")}.html"
+ArchivePageSize: 3
+ArchiveOrderKey: Published
+ArchiveOrderDescending: true
+ArchiveTitle: => GetString("Title")
+---
+
+<div class="page-header">
+    <h1>
+        @if (Document.ContainsKey("Title"))
+        {
+        @Document.GetString("Title")
+        }
+        else
+        {
+        @Document.GetString("SiteTitle")
+        }
+    </h1>
+</div>
+
+<div>
+
+    @foreach (IDocument post in Document.GetChildren())
+    {
+    var excerpt = post.GetString(Keys.Excerpt);
+    using var reader = new System.IO.StreamReader(post.GetContentStream());
+
+    <article class="home">
+        <span class="post-date">
+            @post.GetDateTime(WebKeys.Published).ToLongDateString(Context)
+        </span>
+        <h2>
+            @Html.DocumentLink(post)
+        </h2>
+        <div>
+            @if (post.ContainsKey("fullview"))
+            {
+            @Html.Raw(reader.ReadToEnd())
+            }
+            else
+            {
+            @if (post.ContainsKey("shortinfo") && !string.IsNullOrEmpty(post.GetString("shortinfo")))
+            {
+            @post.GetString("shortinfo")
+            }
+            else if (post.ContainsKey("description") && !string.IsNullOrEmpty(post.GetString("description")))
+            {
+            @post.GetString("description")
+            }
+            else
+            {
+            @Html.Raw(reader.ReadLine())
+            }
+            }
+        </div>
+    </article>
+    }
+
+    <hr />
+
+    @{
+    var newer = Document.GetDocument(Keys.Previous);
+    var older = Document.GetDocument(Keys.Next);
+    var currentPage = Document.GetInt(Keys.Index);
+    var totalPages = Document.GetInt(Keys.TotalPages);
+    }
+    @if (older != null || newer != null)
+    {
+    <ul class="pager">
+        @if (newer != null)
+        {
+        <li class="previous">
+            <a href="@Context.GetLink(newer)">&larr; Newer</a>
+        </li>
+        }
+        else
+        {
+        <li class="previous disabled">
+            <a>&larr; Newer</a>
+        </li>
+        }
+        <li>
+            <span class="page_number">Page: @currentPage of @totalPages</span>
+        </li>
+        @if (older != null)
+        {
+        <li class="next">
+            <a href="@Context.GetLink(older)">Older &rarr;</a>
+        </li>
+        }
+        else
+        {
+        <li class="next disabled">
+            <a>Older &rarr;</a>
+        </li>
+        }
+    </ul>
+    }
+</div>

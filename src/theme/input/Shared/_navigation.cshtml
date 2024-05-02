@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default visible-xs" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        @if (Document.ContainsKey("Author.GitHub"))
+        {
+            <a type="button" class="navbar-toggle nav-link" href="http://github.com/@Document.GetString("Author.GitHub")">
+                <i class="fa fa-github"></i>
+            </a>
+        }
+        @if (Document.ContainsKey("Author.Twitter"))
+        {
+            <a type="button" class="navbar-toggle nav-link" href="http://twitter.com/@Document.GetString("Author.Twitter")">
+                <i class="fa fa-twitter"></i>
+            </a>
+        }
+        @if (Document.ContainsKey("Author.Email"))
+        {
+            <a type="button" class="navbar-toggle nav-link" href="mailto:@Document.GetString("Author.Email")">
+                <i class="fa fa-envelope"></i>
+            </a>
+        }
+        @if (Document.ContainsKey("Author.Email_md5"))
+        {
+            <a class="navbar-brand" href='@Context.GetLink("/")'>
+                <img src="//www.gravatar.com/avatar/@Document.GetString("Author.Email_md5")?s=35" class="img-circle" />
+                @Context.GetString("SiteTitle")
+            </a>
+        }
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href='@Context.GetLink("/")'>Home</a></li>
+            <li><a href='@Context.GetLink(Outputs.Get("categories.html"))'>Categories</a></li>
+            <li><a href='@Context.GetLink(Outputs.Get("tags.html"))'>Tags</a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+
+<!-- nav-menu-dropdown -->
+<div class="btn-group hidden-xs" id="nav-menu">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bars"></i>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href='@Context.GetLink("/")'><i class="fa fa-home"></i>Home</a></li>
+        <li><a href='@Context.GetLink(Outputs.Get("categories.html"))'><i class="fa fa-folder"></i>Categories</a></li>
+        <li><a href='@Context.GetLink(Outputs.Get("tags.html"))'><i class="fa fa-tags"></i>Tags</a></li>
+        <li class="divider"></li>
+        <li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+    </ul>
+</div>

@@ -1,0 +1,27 @@
+MinimumStatiqWebVersion-CleanBlog: "1.0.0-beta.36"
+SiteTitle: My Blog
+PageTitle: |
+  =>
+  {
+    string siteTitle = Context.GetString("SiteTitle");
+    string title = GetString("Title");
+    return string.IsNullOrWhiteSpace(siteTitle) ? title : (string.IsNullOrWhiteSpace(title) ? siteTitle : $"{siteTitle} - {title}");
+  }
+Copyright: => $"Copyright © {DateTime.Now.Year}"
+PostSources: posts/**/*
+IsPost: => Context.Outputs.FilterSources(Context.GetString("PostSources")).ContainsById(Document)
+PageSources: pages/**/*
+IsPage: => Context.Outputs.FilterSources(Context.GetString("PageSources")).ContainsById(Document)
+Layout: /_layout.cshtml
+GiscusRepoName:
+GiscusRepoId:
+GiscusCategoryId:
+
+Author.Name: Poy Chang
+Author.Email: poypost@gmail.com
+Author.GitHub: poychang
+Author.Twitter: poychang
+Author.Pinterest: TBD
+Author.Linkedin: TBD
+Author.Bio: Your stylish, minimalist theme!
+Author.Email_md5: 726351295ec82e145928582f595aa3aa

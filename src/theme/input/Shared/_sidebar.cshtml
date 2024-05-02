@@ -1,0 +1,81 @@
+@{
+    var sidebar_background_image = Document.ContainsKey("sidebar_background_image")
+        ? $"background: url({Document.GetString("sidebar_background_image")}) no-repeat !important;"
+        : "";
+}
+
+<div class="col-sm-3 sidebar hidden-xs" style="@sidebar_background_image">
+    <header class="sidebar-header" role="banner">
+        <a href='@Context.GetLink("/")'>
+            <img src='//www.gravatar.com/avatar/@Document.GetString("Author.Email_md5")?s=150' class="img-circle" />
+        </a>
+        <h3 class="title">
+            <a href='@Context.GetLink("/")'>@Context.GetString("SiteTitle")</a>
+        </h3>
+    </header>
+
+    @if (Document.ContainsKey("Author.Bio"))
+    {
+        <div id="bio" class="text-center">
+            @Document.GetString("Author.Bio")
+        </div>
+    }
+
+    <div id="contact-list" class="text-center">
+        <ul class="list-unstyled list-inline">
+            @if (Document.ContainsKey("Author.GitHub"))
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="https://github.com/@Document.GetString("Author.GitHub")">
+                        <i class="fa fa-github-alt fa-lg"></i>
+                    </a>
+                </li>
+            }
+            @if (Document.ContainsKey("Author.Twitter"))
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="https://twitter.com/@Document.GetString("Author.Twitter")">
+                        <i class="fa fa-twitter fa-lg"></i>
+                    </a>
+                </li>
+            }
+            @if (Document.ContainsKey("Author.Email"))
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="mailto:@Document.GetString("Author.Email")">
+                        <i class="fa fa-envelope fa-lg"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+        <ul id="contact-list-secondary" class="list-unstyled list-inline">
+            @if (Document.ContainsKey("Author.Pinterest"))
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="https://pinterest.com/@Document.GetString("Author.Pinterest")">
+                        <i class="fa fa-pinterest fa-lg"></i>
+                    </a>
+                </li>
+            }
+            @if (Document.ContainsKey("Author.Linkedin"))
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="https://linkedin.com/in/@Document.GetString("Author.Linkedin")">
+                        <i class="fa fa-linkedin fa-lg"></i>
+                    </a>
+                </li>
+            }
+            @{
+                IDocument rssFeed = Outputs["**/*.rss"].FirstOrDefault();
+            }
+            @if (rssFeed != null)
+            {
+                <li>
+                    <a class="btn btn-default btn-sm" href="@Context.GetLink(rssFeed)">
+                        <i class="fa fa-rss fa-lg"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
